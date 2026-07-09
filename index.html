@@ -1,301 +1,482 @@
- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1,
+maximum-scale=1,
+user-scalable=no">
 
 
+<title>A Quiet Place</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
+:root{
+
+color-scheme:light dark;
+
+--bg:#f6f6f3;
+--text:#222;
+--muted:#767676;
+--quote:#555;
+--line:rgba(0,0,0,.08);
+
+}
+
+@media(prefers-color-scheme:dark){
+
+:root{
+
+--bg:#0d0d0d;
+--text:#ececec;
+--muted:#9b9b9b;
+--quote:#d5d5d5;
+--line:rgba(255,255,255,.08);
+
+}
+
+}
+
 *{
+
 margin:0;
 padding:0;
 box-sizing:border-box;
-}
-
-html,
-body{
-
-width:100%;
-height:100%;
-overflow:hidden;
-
-font-family:Inter,sans-serif;
-
-background:#0f0f10;
-
-color:#ececec;
 
 }
 
-body{
-
-display:flex;
-text-align: justify;
-justify-content:center;
-
-align-items:center;
-
-padding:20px;
-
-background:
-radial-gradient(circle at top,#1b1b1b,#0f0f10 70%);
-
-}
-
-
-
-.card{
-
-width:min(900px,100%);
-height:min(720px,100%);
-
-background:#171717;
-
-border:1px solid #2b2b2b;
-
-border-radius:22px;
-
-display:flex;
-
-flex-direction:column;
-
-overflow:hidden;
-
-box-shadow:
-0 20px 60px rgba(0,0,0,.35);
-
-}
-
-
-
-
-/* Scroll */
-
-.message{
-
-flex:1;
-
-overflow-y:auto;
-
-padding:35px;
+html{
 
 scroll-behavior:smooth;
 
 }
 
-/* Scrollbar */
+body{
 
-.message::-webkit-scrollbar{
+font-family:Inter,sans-serif;
 
-width:6px;
+background:var(--bg);
 
-}
+color:var(--text);
 
-.message::-webkit-scrollbar-thumb{
-
-background:#3d3d3d;
-
-border-radius:100px;
-
-}
-
-.message::-webkit-scrollbar-track{
-
-background:transparent;
-
-}
-
-
-.message p{
+font-size:clamp(16px,.95rem + .2vw,18px);
 
 line-height:2;
 
-color:#dddddd;
+letter-spacing:.01em;
 
-margin-bottom:24px;
+overflow:hidden;
+
+-webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+user-select:none;
 
 }
 
-.message blockquote{
+main{
 
-border-left:2px solid orangered;
+height:100svh;
 
-padding-left:18px;
+overflow-y:auto;
 
-margin:25px 0;
+padding:clamp(30px,7vw,100px);
 
-color:orange;
+scrollbar-width:none;
+
+}
+
+main::-webkit-scrollbar{
+
+display:none;
+
+}
+
+article{
+
+width:min(700px,100%);
+
+margin:auto;
+
+}
+
+p{
+
+margin-bottom:2rem;
+text-align: justify;
+
+}
+
+blockquote{
+    margin:4rem 0;
+    padding-left:22px;
+    border-left:1px solid rgba(127,127,127,.35);
+    color:#222;
+    font-style:italic;
+}
+
+.blessing{
+
+margin-top:3rem;
 
 font-style:italic;
 
+color:var(--muted);
+
 }
 
+footer{
 
+margin-top:5rem;
 
-.footer{
+padding-top:1.5rem;
 
-padding:18px 35px;
-
-border-top:1px solid #2b2b2b;
+border-top:1px solid var(--line);
 
 display:flex;
 
 justify-content:space-between;
 
-align-items:center;
+flex-wrap:wrap;
+
+gap:12px;
 
 font-size:.85rem;
 
-color:#888;
-
-flex-shrink:0;
+color:var(--muted);
 
 }
 
-/* Mobile */
+::selection{
 
-@media(max-width:768px){
+background:rgba(120,120,120,.25);
+
+}
+
+@media(max-width:700px){
 
 body{
 
-padding:12px;
+line-height:1.9;
 
 }
 
-.card{
+footer{
 
-height:100%;
+flex-direction:column;
 
-border-radius:16px;
-
-}
-
-.header{
-
-padding:25px;
-
-}
-
-.message{
-
-padding:25px;
-
-}
-
-.footer{
-
-padding:15px 25px;
+align-items:flex-start;
 
 }
 
 }
+
+
+
+
+#loader{
+
+position:fixed;
+inset:0;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:var(--bg);
+
+z-index:9999;
+
+transition:opacity .8s ease, visibility .8s;
+
+}
+
+.loader-content{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:20px;
+
+}
+
+.spinner{
+
+width:34px;
+height:34px;
+
+border:2px solid rgba(127,127,127,.2);
+border-top-color:var(--text);
+
+border-radius:50%;
+
+animation:spin .9s linear infinite;
+
+}
+
+@keyframes spin{
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+#loader.hide{
+
+opacity:0;
+visibility:hidden;
+
+}
+
+
+
+
+
+
+
+
+#countdownScreen{
+
+position:fixed;
+inset:0;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+text-align:center;
+
+background:var(--bg);
+
+z-index:9000;
+
+padding:30px;
+
+}
+
+#countdownScreen h2{
+
+font-size:clamp(1.4rem,2vw,2rem);
+
+font-weight:500;
+
+margin-bottom:20px;
+
+}
+
+#countdownScreen p{
+
+margin-bottom:20px;
+
+color:var(--muted);
+
+text-align:center;
+
+}
+
+#countdownScreen h1{
+
+font-size:clamp(2rem,7vw,4rem);
+
+font-weight:300;
+
+letter-spacing:.08em;
+
+}
+
+
+
+
+
+
+
 
 </style>
 
 </head>
 
+
+
+
+
 <body>
 
-<div class="card">
+    <div id="loader">
+
+    <div class="loader-content">
+
+        <div class="spinner"></div>
+
+        <p>Loading...</p>
+
+    </div>
+
+</div>
 
 
 
-<div class="message">
+
+    <div id="countdownScreen">
 
 
+
+<h1>
+
+<span id="days"></span>d
+
+<span id="hours"></span>h
+
+<span id="minutes"></span>m
+
+<span id="seconds"></span>s
+
+</h1>
+
+</div>
+
+
+
+<main id="content" style="display:none;">
+
+<article>
+<p>
+
+If this message happens to find you, I hope life is kind to you.
+
+</p>
 
 <p>
 
-We spend so much of our lives chasing things we believe will finally make us feel complete success, recognition, certainty, or the feeling that we've finally arrived. Yet as time quietly moves forward, it has a way of changing what truly matters.
-Many of the things we once pursued so desperately eventually lose their weight, while the things we hardly noticed slowly become the ones we value the most. A peaceful morning. Good health. An honest conversation. Time with family. The chance to begin another day.
+May you find success in whatever you choose to pursue, good health to enjoy the journey, and people who bring honesty, peace, and encouragement into your life.
 
-<br><br/>
+</p>
 
-We often live as though time is abundant, until life gently reminds us that it isn't. The years can feel long while we're living them, yet somehow they become memories sooner than we expect. We assume there will always be another opportunity, another conversation, another tomorrow. Sometimes there is. Sometimes there isn't.
-Perhaps that's why the smallest moments deserve more attention than we usually give them.
+<p>
 
-<br><br/>
+There will be seasons of certainty and seasons of doubt. You won't always have all the answers, and that's okay. Some of life's clearest lessons are only understood after we've taken the next step.
 
-Life also has a way of convincing us that we must have everything figured out before we can move forward. But clarity rarely arrives all at once. More often, it grows while we continue walking. We don't need complete certainty to take the next step. Uncertainty is not always a sign that we're lost; sometimes it's simply where growth begins.
+</p>
 
-We often think growth comes from gaining more, but some of the deepest growth comes from letting go—of unnecessary pride, endless comparison, the need to always be understood, and the pressure to prove our worth to others.
+<p>
 
-<br><br/>
-
-Not everything valuable asks to be noticed. Not every victory needs to be announced. Some of the most meaningful things in life are quietly lived rather than publicly displayed.
-
-<br><br/>
-
-Time will continue to move. People will come and go. Circumstances will change. Much of life will always remain beyond our control.
-
-
-
-
-
-
-
+As time moves forward, don't forget the things that quietly give life its meaning. Stay humble when things go well. Stay grateful for the ordinary. Be generous when you can. Choose what brings you peace, and never let the pursuit of more cost you the person you're becoming.
 
 </p>
 
 <blockquote>
 
-"Time is finite. Character is formed. Everything else is perspective."
+Time is finite. Character is formed. Everything else is perspective.
 
 </blockquote>
 
 <p>
 
-What remains within our control is the kind of person we choose to become.
-
-<br><br/>
-
-
-Perhaps a meaningful life is not measured by how much we gather, but by how faithfully we live—whether we remain humble when success comes, grateful for ordinary moments, generous when we have the opportunity to give, and at peace with ourselves even when life feels uncertain.
-
-Maybe the goal was never to have all the answers.
-
-Maybe it has always been to keep moving forward with humility, to appreciate what is already here, and to become a little better with the time we are given.
-
-<br><br/>
-
-Because in the end, time is both long enough to shape a life, and short enough to remind us not to waste it.
-
-
-
-<p style="color: limegreen; font-style:italic">May you always find the wisdom to value what truly matters, the humility to keep learning, and the peace to walk your own path with confidence and grace.
-</p>
-
+Wherever life leads you, I sincerely wish you peace, wisdom, and the quiet strength to keep moving forward.
 
 </p>
 
+<footer>
+
+<span>Last Updated · July 2026</span>
+
+<span>Louis</span>
+
+</footer>
+
+</article>
 
 
-</div>
 
-<div class="footer">
-
-<span>Last Updated — July 2026</span>
-
-<span>Louís</span>
-
-</div>
-
-</div>
-
+</main>
 <script>
 
+document.addEventListener("copy", e => e.preventDefault());
+document.addEventListener("cut", e => e.preventDefault());
 
+const SETTINGS = {
 
-document.title =
-document.querySelector("h1").textContent;
+    countdownEnabled: false, // true = show countdown | false = skip countdown
+
+    unlockDate: new Date(2026, 7, 19, 0, 0, 0), // August 19, 2026
+
+    minimumLoaderTime: 500 // milliseconds
+
+};
+
+const loader = document.getElementById("loader");
+const countdownScreen = document.getElementById("countdownScreen");
+const content = document.getElementById("content");
+
+const startTime = performance.now();
+
+function showContent(){
+
+    countdownScreen.style.display = "none";
+    content.style.display = "block";
+
+}
+
+function updateCountdown(){
+
+    const now = new Date();
+    const diff = SETTINGS.unlockDate - now;
+
+    if(diff <= 0){
+
+        showContent();
+        return;
+
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+    document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+    document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+
+}
+
+window.addEventListener("load", () => {
+
+    const elapsed = performance.now() - startTime;
+
+    const remaining = Math.max(
+        SETTINGS.minimumLoaderTime - elapsed,
+        0
+    );
+
+    setTimeout(() => {
+
+        loader.classList.add("hide");
+
+        if (SETTINGS.countdownEnabled) {
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+
+        } else {
+
+            showContent();
+
+        }
+
+    }, remaining);
+
+});
 
 </script>
-
 </body>
 </html>
-
