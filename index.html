@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+here<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -175,219 +175,32 @@ align-items:flex-start;
 }
 
 }
-<style>
 
-:root{
 
-color-scheme:light dark;
 
---bg:#f6f6f3;
---text:#222;
---muted:#767676;
---quote:#555;
---line:rgba(0,0,0,.08);
-
-}
-
-@media(prefers-color-scheme:dark){
-
-:root{
-
---bg:#0d0d0d;
---text:#ececec;
---muted:#9b9b9b;
---quote:#d5d5d5;
---line:rgba(255,255,255,.08);
-
-}
-
-}
-
-*{
-
-margin:0;
-padding:0;
-box-sizing:border-box;
-
-}
-
-html{
-
-scroll-behavior:smooth;
-
-}
-
-body{
-
-font-family:Inter,sans-serif;
-
-background:var(--bg);
-
-color:var(--text);
-
-font-size:clamp(16px,.95rem + .2vw,18px);
-
-line-height:2;
-
-letter-spacing:.01em;
-
-overflow:hidden;
-
-height:100dvh;
-
--webkit-user-select:none;
--moz-user-select:none;
--ms-user-select:none;
-user-select:none;
-
-}
-
-main{
-
-height:100dvh;
-
-display:flex;
-
-flex-direction:column;
-
-padding:clamp(24px,6vw,70px);
-
-overflow:hidden;
-
-}
-
-article{
-
-width:min(700px,100%);
-
-margin:0 auto;
-
-flex:1;
-
-overflow-y:auto;
-
-padding-right:6px;
-
-scrollbar-width:none;
-
-overscroll-behavior:contain;
-
-}
-
-article::-webkit-scrollbar{
-
-display:none;
-
-}
-
-p{
-
-margin-bottom:2rem;
-
-text-align:justify;
-
-}
-
-blockquote{
-
-margin:3rem 0;
-
-padding-left:22px;
-
-border-left:4px solid var(--line);
-
-color:var(--quote);
-
-font-style:italic;
-
-}
-
-.blessing{
-
-margin-top:3rem;
-
-font-style:italic;
-
-color:var(--muted);
-
-}
-
-footer{
-
-flex-shrink:0;
-
-width:min(700px,100%);
-
-margin:18px auto 0;
-
-padding-top:18px;
-
-border-top:2px solid var(--line);
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-font-size:.85rem;
-
-color:var(--muted);
-
-}
-
-::selection{
-
-background:rgba(120,120,120,.25);
-
-}
-
-@media(max-width:700px){
-
-body{
-
-line-height:1.9;
-
-}
-
-main{
-
-padding:22px;
-
-}
-
-}
-
-/* Loader */
 
 #loader{
 
 position:fixed;
-
 inset:0;
 
 display:flex;
-
 justify-content:center;
-
 align-items:center;
 
 background:var(--bg);
 
 z-index:9999;
 
-transition:opacity .8s ease,visibility .8s;
+transition:opacity .8s ease, visibility .8s;
 
 }
 
 .loader-content{
 
 display:flex;
-
 flex-direction:column;
-
 align-items:center;
-
 gap:20px;
 
 }
@@ -395,11 +208,9 @@ gap:20px;
 .spinner{
 
 width:34px;
-
 height:34px;
 
 border:2px solid rgba(127,127,127,.2);
-
 border-top-color:var(--text);
 
 border-radius:50%;
@@ -421,25 +232,25 @@ transform:rotate(360deg);
 #loader.hide{
 
 opacity:0;
-
 visibility:hidden;
 
 }
 
-/* Countdown */
+
+
+
+
+
+
 
 #countdownScreen{
 
 position:fixed;
-
 inset:0;
 
 display:flex;
-
 flex-direction:column;
-
 justify-content:center;
-
 align-items:center;
 
 text-align:center;
@@ -452,6 +263,26 @@ padding:30px;
 
 }
 
+#countdownScreen h2{
+
+font-size:clamp(1.4rem,2vw,2rem);
+
+font-weight:500;
+
+margin-bottom:20px;
+
+}
+
+#countdownScreen p{
+
+margin-bottom:20px;
+
+color:var(--muted);
+
+text-align:center;
+
+}
+
 #countdownScreen h1{
 
 font-size:clamp(2rem,7vw,4rem);
@@ -461,6 +292,13 @@ font-weight:300;
 letter-spacing:.08em;
 
 }
+
+
+
+
+
+
+
 
 </style>
 
@@ -543,13 +381,15 @@ Wherever life leads you, I wish you peace, wisdom, and strength to keep going.
 
 </p>
 
+<footer>
 
+
+<span>LEC</span>
+
+</footer>
 
 </article>
 
-    <footer>
-    <span>LEC</span>
-    </footer>
 
 
 </main>
@@ -564,7 +404,7 @@ const SETTINGS = {
 
     unlockDate: new Date(2026, 7, 19, 0, 0, 0), // August 19, 2026
 
-    minimumLoaderTime: 3500 // milliseconds
+    minimumLoaderTime: 2004 // milliseconds
 
 };
 
@@ -635,4 +475,4 @@ window.addEventListener("load", () => {
 
 </script>
 </body>
-</html>
+    </html>
