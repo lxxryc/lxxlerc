@@ -420,7 +420,8 @@ const SETTINGS = {
     unlockDate: new Date(2026, 7, 19, 0, 0, 0),
     minimumLoaderTime: 1000
 };
-
+    
+const hasLoaded = sessionStorage.getItem("hasLoaded");
 const loader = document.getElementById("loader");
 const countdownScreen = document.getElementById("countdownScreen");
 const content = document.getElementById("content");
@@ -455,6 +456,12 @@ function updateCountdown(){
 
 window.addEventListener("load", () => {
 
+    if(hasLoaded){
+        loader.style.display = "none";
+        showContent();
+        return;
+    }
+
     const elapsed = performance.now() - startTime;
 
     const remaining = Math.max(
@@ -465,6 +472,8 @@ window.addEventListener("load", () => {
     setTimeout(() => {
 
         loader.classList.add("hide");
+
+        sessionStorage.setItem("hasLoaded", "true");
 
         if (SETTINGS.countdownEnabled) {
             updateCountdown();
