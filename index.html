@@ -290,6 +290,25 @@ letter-spacing:.08em;
 }
 
 
+
+
+    #nextBtn{
+    margin-top:3rem;
+    text-align:center;
+    font-size:1.5rem;
+    cursor:pointer;
+    color:var(--muted);
+    transition:opacity .3s ease;
+}
+
+#nextBtn:hover{
+    opacity:.6;
+}
+
+#mainText{
+    transition:opacity .4s ease;
+}
+    
 </style>
 
 </head>
@@ -337,7 +356,7 @@ letter-spacing:.08em;
 
 <main id="content" style="display:none;">
 
-<article>
+<article id="mainText">
 <p>
 
 If this message happens to find you, I hope life is kind to you.
@@ -371,12 +390,8 @@ Wherever life leads you, I wish you peace, wisdom, and strength to keep going.
 
 </p>
 
-<footer>
-
-
-<span>LEC</span>
-
-</footer>
+   <div id="nextBtn">→</div>
+<footer><span>LEC</span></footer>
 
 </article>
 
@@ -461,6 +476,59 @@ window.addEventListener("load", () => {
 
     }, remaining);
 
+});
+
+
+
+
+
+
+        function nextPage(){
+
+    const article = document.getElementById("mainText");
+
+    article.style.opacity = 0;
+
+    setTimeout(() => {
+
+        article.innerHTML = `
+
+<p>If you’re reading this, it means you clicked the link because you were curious.</p>
+
+<p>There isn’t much to explain, and that’s on purpose.</p>
+
+<p>This account was just a part of my life at one point.</p>
+
+<p>I used it to talk, think, and share things that felt important at that time.</p>
+
+<p>But not everything is meant to continue forever.</p>
+
+<p>Some things are better left as they are.</p>
+
+<p>Sometimes moving on is simply part of the process.</p>
+
+<p>Not everything you create is meant to last forever.</p>
+
+<p>Some things exist just long enough to shape you—and that’s enough.</p>
+
+<p>Thank you for taking the time to read this.</p>
+
+<footer>
+<span>LEC</span>
+</footer>
+
+        `;
+
+        article.style.opacity = 1;
+
+    }, 300);
+}
+
+// attach event AFTER content is shown
+document.addEventListener("click", function(e){
+    if(e.target && e.target.id === "nextBtn"){
+        nextPage();
+    }
 });
 
 </script>
