@@ -43,6 +43,10 @@ color-scheme:light dark;
 }
 
 *{
+    -webkit-tap-highlight-color: transparent;
+}
+    
+*{
 
 margin:0;
 padding:0;
@@ -131,21 +135,37 @@ color:var(--muted);
 }
 
 footer{
+    position:relative;
 
-margin-top:5rem;
-padding-top:1.5rem;
+    margin-top:5rem;
+    padding-top:1.5rem;
 
-border-top:2px solid var(--line);
+    border-top:2px solid var(--line);
 
-display:flex;
-justify-content:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-font-size:1rem;
-font-weight:600;
-letter-spacing:.1em;
+    font-size:1rem;
+    font-weight:600;
+    letter-spacing:.1em;
+}
 
-color:var(--text);
+/* center LEC naturally */
+#lec{
+    pointer-events:none;
+}
 
+/* push arrow to right */
+#nextArrow{
+    position:absolute;
+    right:0;
+
+    cursor:pointer;
+    font-size:1.2rem;
+
+    color:var(--muted);
+    transition:opacity .3s ease;
 }
 
 ::selection{
@@ -292,18 +312,7 @@ letter-spacing:.08em;
 
 
 
-    #nextBtn{
-    margin-top:3rem;
-    text-align:center;
-    font-size:1.5rem;
-    cursor:pointer;
-    color:var(--muted);
-    transition:opacity .3s ease;
-}
 
-#nextBtn:hover{
-    opacity:.6;
-}
 
 #mainText{
     transition:opacity .4s ease;
@@ -390,8 +399,11 @@ Wherever life leads you, I wish you peace, wisdom, and strength to keep going.
 
 </p>
 
-   <div id="nextBtn">→</div>
-<footer><span>LEC</span></footer>
+   
+<footer>
+    <span id="lec">LEC</span>
+    <span id="nextArrow">→</span>
+</footer>
 
 </article>
 
@@ -404,13 +416,9 @@ document.addEventListener("copy", e => e.preventDefault());
 document.addEventListener("cut", e => e.preventDefault());
 
 const SETTINGS = {
-
-    countdownEnabled: false, // true = show countdown | false = skip countdown
-
-    unlockDate: new Date(2026, 7, 19, 0, 0, 0), // August 19, 2026
-
-    minimumLoaderTime: 1000 // milliseconds
-
+    countdownEnabled: false,
+    unlockDate: new Date(2026, 7, 19, 0, 0, 0),
+    minimumLoaderTime: 1000
 };
 
 const loader = document.getElementById("loader");
@@ -420,10 +428,8 @@ const content = document.getElementById("content");
 const startTime = performance.now();
 
 function showContent(){
-
     countdownScreen.style.display = "none";
     content.style.display = "block";
-
 }
 
 function updateCountdown(){
@@ -432,10 +438,8 @@ function updateCountdown(){
     const diff = SETTINGS.unlockDate - now;
 
     if(diff <= 0){
-
         showContent();
         return;
-
     }
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -447,7 +451,6 @@ function updateCountdown(){
     document.getElementById("hours").textContent = String(hours).padStart(2, "0");
     document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
     document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
-
 }
 
 window.addEventListener("load", () => {
@@ -464,14 +467,10 @@ window.addEventListener("load", () => {
         loader.classList.add("hide");
 
         if (SETTINGS.countdownEnabled) {
-
             updateCountdown();
             setInterval(updateCountdown, 1000);
-
         } else {
-
             showContent();
-
         }
 
     }, remaining);
@@ -479,11 +478,18 @@ window.addEventListener("load", () => {
 });
 
 
+// ✅ BACK BUTTON (set once)
+window.onpopstate = function(){
+    location.reload();
+};
 
 
+// ✅ NEXT PAGE FUNCTION
+function nextPage(){
 
-
-        function nextPage(){
+    if(!history.state){
+        history.pushState({page: 2}, "", "");
+    }
 
     const article = document.getElementById("mainText");
 
@@ -514,7 +520,8 @@ window.addEventListener("load", () => {
 <p>Thank you for taking the time to read this.</p>
 
 <footer>
-<span>LEC</span>
+    <span id="lec">LEC</span>
+    <span id="nextArrow">→</span>
 </footer>
 
         `;
@@ -524,9 +531,10 @@ window.addEventListener("load", () => {
     }, 300);
 }
 
-// attach event AFTER content is shown
+
+// ✅ CLICK HANDLER (fixed ID)
 document.addEventListener("click", function(e){
-    if(e.target && e.target.id === "nextBtn"){
+    if(e.target && e.target.id === "nextArrow"){
         nextPage();
     }
 });
