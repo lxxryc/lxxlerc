@@ -83,17 +83,17 @@ user-select:none;
 
 }
 
+
+
 main{
-
-height:100svh;
-
-overflow-y:auto;
-
-padding:clamp(30px,7vw,100px);
-
-scrollbar-width:none;
-
+    height:100svh;
+    overflow-y:auto;
+    padding:clamp(30px,7vw,100px);
+    padding-bottom:120px;
 }
+
+
+
 
 main::-webkit-scrollbar{
 
@@ -135,10 +135,13 @@ color:var(--muted);
 }
 
 footer{
-    position:relative;
+    position:fixed;
 
-    margin-top:5rem;
-    padding-top:1.5rem;
+    bottom:0;
+    left:0;
+    width:100%;
+
+    padding:1.5rem;
 
     border-top:2px solid var(--line);
 
@@ -146,9 +149,15 @@ footer{
     justify-content:center;
     align-items:center;
 
+    background:var(--bg);
+
     font-size:1rem;
     font-weight:600;
     letter-spacing:.1em;
+
+    color:var(--text);
+
+    z-index:100;
 }
 
 /* center LEC naturally */
