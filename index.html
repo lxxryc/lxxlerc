@@ -1,527 +1,512 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Louís</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        :root {
+            color-scheme: light dark;
+
+            --bg: #f6f6f3;
+            --surface: #ffffff;
+            --text: #222222;
+            --muted: #767676;
+            --quote: #444444;
+            --line: rgba(0, 0, 0, 0.08);
+            --shadow:
+                0 12px 35px rgba(0, 0, 0, 0.06),
+                0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0d0d0d;
+                --surface: #151515;
+                --text: #eeeeee;
+                --muted: #9b9b9b;
+                --quote: #dddddd;
+                --line: rgba(255, 255, 255, 0.09);
+                --shadow:
+                    0 12px 35px rgba(0, 0, 0, 0.25),
+                    0 2px 8px rgba(0, 0, 0, 0.18);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100svh;
+            font-family: "Inter", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: clamp(16px, 0.95rem + 0.2vw, 18px);
+            line-height: 1.9;
+            letter-spacing: 0.01em;
+
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        /* =========================
+           PAGE CONTENT
+        ========================= */
+
+        main {
+            min-height: 100svh;
+            overflow-y: auto;
+
+            padding:
+                clamp(32px, 8vw, 100px)
+                clamp(20px, 6vw, 70px)
+                120px;
+        }
+
+        main::-webkit-scrollbar {
+            display: none;
+        }
+
+        article {
+            width: min(680px, 100%);
+            margin: 0 auto;
+        }
+
+        /* =========================
+           QUOTE CARD
+        ========================= */
+
+        .quote-card {
+            position: relative;
+
+            padding: clamp(28px, 5vw, 48px);
+
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+
+            box-shadow: var(--shadow);
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,
-initial-scale=1,
-maximum-scale=1,
-user-scalable=no">
+        .quote-mark {
+            display: block;
 
+            margin-bottom: 10px;
 
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 500;
+            line-height: 0.8;
 
+            color: var(--muted);
+            opacity: 0.55;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+        .quote-text {
+            margin: 0;
 
-<style>
+            color: var(--quote);
 
-:root{
+            font-size: clamp(1.05rem, 1rem + 0.25vw, 1.2rem);
+            font-weight: 400;
+            line-height: 1.9;
 
-color-scheme:light dark;
+            text-align: left;
+        }
 
---bg:#f6f6f3;
---text:#222;
---muted:#767676;
---quote:#555;
---line:rgba(0,0,0,.08);
+        .quote-author {
+            display: block;
 
-}
+            margin-top: 28px;
+            padding-top: 18px;
 
-@media(prefers-color-scheme:dark){
+            border-top: 1px solid var(--line);
 
-:root{
+            color: var(--muted);
 
---bg:#0d0d0d;
---text:#ececec;
---muted:#9b9b9b;
---quote:#d5d5d5;
---line:rgba(255,255,255,.08);
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
 
-}
+        /* =========================
+           FOOTER
+        ========================= */
 
-}
+        footer {
+            position: fixed;
+            z-index: 100;
 
-*{
-    -webkit-tap-highlight-color: transparent;
-}
-    
-*{
+            right: 0;
+            bottom: 0;
+            left: 0;
 
-margin:0;
-padding:0;
-box-sizing:border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-}
+            min-height: 72px;
+            padding: 16px 24px;
 
-html{
+            background: var(--bg);
+            border-top: 1px solid var(--line);
 
-scroll-behavior:smooth;
+            color: var(--text);
 
-}
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+        }
 
-body{
+        #lec {
+            pointer-events: none;
+        }
 
-font-family:Inter,sans-serif;
+        /* =========================
+           LOADER
+        ========================= */
 
-background:var(--bg);
+        #loader {
+            position: fixed;
+            z-index: 9999;
+            inset: 0;
 
-color:var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-font-size:clamp(16px,.95rem + .2vw,18px);
+            background: var(--bg);
 
-line-height:2;
+            transition:
+                opacity 0.8s ease,
+                visibility 0.8s ease;
+        }
 
-letter-spacing:.01em;
+        #loader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-overflow:hidden;
+        .loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
 
--webkit-user-select:none;
--moz-user-select:none;
--ms-user-select:none;
-user-select:none;
+            text-align: center;
+        }
 
-}
+        .spinner {
+            width: 32px;
+            height: 32px;
 
+            border: 2px solid var(--line);
+            border-top-color: var(--text);
+            border-radius: 50%;
 
+            animation: spin 0.9s linear infinite;
+        }
 
-main{
-    height:100svh;
-    overflow-y:auto;
-    padding:clamp(30px,7vw,100px);
-    padding-bottom:120px;
-}
+        .loader-content p {
+            color: var(--muted);
 
+            font-size: 0.78rem;
+            line-height: 1.5;
+            letter-spacing: 0.04em;
+        }
 
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
+        /* =========================
+           COUNTDOWN
+        ========================= */
 
-main::-webkit-scrollbar{
+        #countdownScreen {
+            position: fixed;
+            z-index: 9000;
+            inset: 0;
 
-display:none;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
-}
+            padding: 30px;
 
-article{
+            background: var(--bg);
 
-width:min(700px,100%);
+            text-align: center;
+        }
 
-margin:auto;
+        #countdownScreen h1 {
+            font-size: clamp(2rem, 7vw, 4rem);
+            font-weight: 300;
+            line-height: 1.2;
+            letter-spacing: 0.08em;
+        }
 
-}
+        #countdownScreen p {
+            margin-top: 18px;
 
-p{
+            color: var(--muted);
 
-margin-bottom:2rem;
-text-align: justify;
+            font-size: 0.9rem;
+        }
 
-}
+        /* =========================
+           SELECTION
+        ========================= */
 
-blockquote{
-    margin:4rem 0;
-    padding-left:22px;
-    border-left:4px solid var(--line);
-    color:var(--quote);
-    font-style:italic;
-}
+        ::selection {
+            background: rgba(120, 120, 120, 0.25);
+        }
 
-.blessing{
+        /* =========================
+           MOBILE
+        ========================= */
 
-margin-top:3rem;
+        @media (max-width: 600px) {
+            main {
+                padding:
+                    28px
+                    18px
+                    105px;
+            }
 
-font-style:italic;
+            .quote-card {
+                padding: 28px 24px;
+                border-radius: 12px;
+            }
 
-color:var(--muted);
+            .quote-text {
+                line-height: 1.8;
+            }
 
-}
+            .quote-author {
+                margin-top: 24px;
+            }
 
-footer{
-    position:fixed;
-
-    bottom:0;
-    left:0;
-    width:100%;
-
-    padding:1.5rem;
-
-    border-top:2px solid var(--line);
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    background:var(--bg);
-
-    font-size:1rem;
-    font-weight:600;
-    letter-spacing:.1em;
-
-    color:var(--text);
-
-    z-index:100;
-}
-
-/* center LEC naturally */
-#lec{
-    pointer-events:none;
-}
-
-/* push arrow to right */
-#nextArrow{
-    position:absolute;
-    right:clamp(30px,7vw,100px);
-
-    cursor:pointer;
-    font-size:1.2rem;
-
-    color:var(--muted);
-    transition:opacity .3s ease;
-}
-
-::selection{
-
-background:rgba(120,120,120,.25);
-
-}
-
-@media(max-width:700px){
-
-body{
-
-line-height:1.9;
-
-}
-
-}
-
-
-
-
-#loader{
-
-position:fixed;
-inset:0;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-background:var(--bg);
-
-z-index:9999;
-
-transition:opacity .8s ease, visibility .8s;
-
-}
-
-.loader-content{
-
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:20px;
-
-}
-
-.spinner{
-
-width:34px;
-height:34px;
-
-border:2px solid rgba(127,127,127,.2);
-border-top-color:var(--text);
-
-border-radius:50%;
-
-animation:spin .9s linear infinite;
-
-}
-
-@keyframes spin{
-
-to{
-
-transform:rotate(360deg);
-
-}
-
-}
-
-#loader.hide{
-
-opacity:0;
-visibility:hidden;
-
-}
-
-
-
-
-
-
-
-
-#countdownScreen{
-
-position:fixed;
-inset:0;
-
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-
-text-align:center;
-
-background:var(--bg);
-
-z-index:9000;
-
-padding:30px;
-
-}
-
-#countdownScreen h2{
-
-font-size:clamp(1.4rem,2vw,2rem);
-
-font-weight:500;
-
-margin-bottom:20px;
-
-}
-
-#countdownScreen p{
-
-margin-bottom:20px;
-
-color:var(--muted);
-
-text-align:center;
-
-}
-
-#countdownScreen h1{
-
-font-size:clamp(2rem,7vw,4rem);
-
-font-weight:300;
-
-letter-spacing:.08em;
-
-}
-
-
-
-
-
-#countdownScreen{
-    display:none;
-}
-
-
-
-
-
-
-#mainText{
-    transition:opacity .4s ease;
-}
-    
-</style>
-
+            footer {
+                min-height: 64px;
+            }
+        }
+    </style>
 </head>
-
-
-
-
 
 <body>
 
-    <div id="loader">
+    <!-- =========================
+         LOADER
+    ========================== -->
 
-    <div class="loader-content">
-
-        <div class="spinner"></div>
-
-        <p>Updated • July 2026</p>
-
+    <div id="loader" aria-hidden="true">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <p>Updated • July 2026</p>
+        </div>
     </div>
 
-</div>
 
-
-
+    <!-- =========================
+         OPTIONAL COUNTDOWN
+    ========================== -->
 
     <div id="countdownScreen">
+        <h1>
+            <span id="days">0</span>d
+            <span id="hours">00</span>h
+            <span id="minutes">00</span>m
+            <span id="seconds">00</span>s
+        </h1>
+
+        <p>Something is waiting for you.</p>
+    </div>
 
 
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
 
-<h1>
+    <main id="content" hidden>
+        <article>
 
-<span id="days"></span>d
+            <section class="quote-card" aria-label="Message from Louís">
 
-<span id="hours"></span>h
+                <span class="quote-mark" aria-hidden="true">“</span>
 
-<span id="minutes"></span>m
+                <p class="quote-text">
+                    Whatever you choose to do in this life, let it bring you peace.
+                    If you succeed in life, remember to stay humble.
+                </p>
 
-<span id="seconds"></span>s
+                <span class="quote-author">
+                    Louís
+                </span>
 
-</h1>
+            </section>
 
-</div>
-
-
-
-<main id="content" style="display:none;">
-
-<article id="mainText">
-<p>
-Whatever you choose to do in this life, let it bring you peace. If you succeed in life, remember to stay humble. 
-
-
-
-
-<!--
-    <blockquote>
-
-Time is finite. Character matters. <br>Everything else is perspective.
-
-</blockquote>
-    -->
+        </article>
+    </main>
 
 
+    <!-- =========================
+         FOOTER
+    ========================== -->
 
-   
-<footer>
-    <span id="lec">LEC</span>
-    <!--<span id="nextArrow">→</span>-->
-</footer>
-
-</article>
-
+    <footer>
+        <span id="lec">LEC</span>
+    </footer>
 
 
-</main>
-<script>
+    <script>
+        (() => {
+            "use strict";
 
-document.addEventListener("copy", e => e.preventDefault());
-document.addEventListener("cut", e => e.preventDefault());
+            /* =========================
+               SETTINGS
+            ========================== */
 
-const SETTINGS = {
-    countdownEnabled: false,
-    unlockDate: new Date(2026, 7, 19, 0, 0, 0),
-    minimumLoaderTime: 1000
-};
-    
-const hasLoaded = sessionStorage.getItem("hasLoaded");
-const loader = document.getElementById("loader");
-const countdownScreen = document.getElementById("countdownScreen");
-const content = document.getElementById("content");
-
-const startTime = performance.now();
-
-function showContent(){
-    countdownScreen.style.display = "none";
-    content.style.display = "block";
-}
-
-function updateCountdown(){
-
-    const now = new Date();
-    const diff = SETTINGS.unlockDate - now;
-
-    if(diff <= 0){
-        showContent();
-        return;
-    }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    document.getElementById("days").textContent = days;
-    document.getElementById("hours").textContent = String(hours).padStart(2, "0");
-    document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
-    document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
-}
-
-window.addEventListener("load", () => {
-
-    if(hasLoaded){
-        loader.style.display = "none";
-        showContent();
-        return;
-    }
-
-    const elapsed = performance.now() - startTime;
-
-    const remaining = Math.max(
-        SETTINGS.minimumLoaderTime - elapsed,
-        0
-    );
-
-    setTimeout(() => {
-
-        loader.classList.add("hide");
-
-        sessionStorage.setItem("hasLoaded", "true");
-
-        if (SETTINGS.countdownEnabled) {
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-        } else {
-            showContent();
-        }
-
-    }, remaining);
-
-});
+            const SETTINGS = {
+                countdownEnabled: false,
+                unlockDate: new Date(2026, 7, 19, 0, 0, 0),
+                minimumLoaderTime: 1000
+            };
 
 
-// BACK BUTTON (set once)
-window.onpopstate = function(){
-    location.reload();
-};
+            /* =========================
+               ELEMENTS
+            ========================== */
+
+            const loader = document.getElementById("loader");
+            const content = document.getElementById("content");
+            const countdownScreen = document.getElementById("countdownScreen");
+
+            const days = document.getElementById("days");
+            const hours = document.getElementById("hours");
+            const minutes = document.getElementById("minutes");
+            const seconds = document.getElementById("seconds");
 
 
-// NEXT PAGE FUNCTION
-function nextPage(){
+            /* =========================
+               SHOW CONTENT
+            ========================== */
 
-    if(!history.state){
-        history.pushState({page: 2}, "", "");
-    }
-
-    const article = document.getElementById("mainText");
-
-    article.style.opacity = 0;
-
-    setTimeout(() => {
-
-        article.innerHTML = `
-
-           <p>...</p>
-
-<footer>
-    <span id="lec">LEC</span>
-    
-</footer>
-
-        `;
-
-        article.style.opacity = 1;
-
-    }, 300);
-}
+            function showContent() {
+                countdownScreen.style.display = "none";
+                content.hidden = false;
+            }
 
 
-// ✅ CLICK HANDLER (fixed ID)
-document.addEventListener("click", function(e){
-    if(e.target && e.target.id === "nextArrow"){
-        nextPage();
-    }
-});
+            /* =========================
+               COUNTDOWN
+            ========================== */
 
-</script>
+            function updateCountdown() {
+                const difference = SETTINGS.unlockDate - new Date();
+
+                if (difference <= 0) {
+                    showContent();
+                    return true;
+                }
+
+                const totalSeconds = Math.floor(difference / 1000);
+
+                const remainingDays = Math.floor(
+                    totalSeconds / 86400
+                );
+
+                const remainingHours = Math.floor(
+                    (totalSeconds % 86400) / 3600
+                );
+
+                const remainingMinutes = Math.floor(
+                    (totalSeconds % 3600) / 60
+                );
+
+                const remainingSeconds =
+                    totalSeconds % 60;
+
+                days.textContent = remainingDays;
+                hours.textContent =
+                    String(remainingHours).padStart(2, "0");
+
+                minutes.textContent =
+                    String(remainingMinutes).padStart(2, "0");
+
+                seconds.textContent =
+                    String(remainingSeconds).padStart(2, "0");
+
+                return false;
+            }
+
+
+            /* =========================
+               INITIALIZATION
+            ========================== */
+
+            const startTime = performance.now();
+
+            window.addEventListener("load", () => {
+                const elapsed = performance.now() - startTime;
+
+                const remainingLoaderTime = Math.max(
+                    SETTINGS.minimumLoaderTime - elapsed,
+                    0
+                );
+
+                setTimeout(() => {
+                    loader.classList.add("hide");
+
+                    if (SETTINGS.countdownEnabled) {
+                        countdownScreen.style.display = "flex";
+
+                        if (!updateCountdown()) {
+                            const countdownInterval = setInterval(() => {
+                                if (updateCountdown()) {
+                                    clearInterval(countdownInterval);
+                                }
+                            }, 1000);
+                        }
+                    } else {
+                        showContent();
+                    }
+                }, remainingLoaderTime);
+            });
+
+
+            /* =========================
+               COPY PROTECTION
+            ========================== */
+
+            document.addEventListener("copy", event => {
+                event.preventDefault();
+            });
+
+            document.addEventListener("cut", event => {
+                event.preventDefault();
+            });
+        })();
+    </script>
+
 </body>
     </html>
